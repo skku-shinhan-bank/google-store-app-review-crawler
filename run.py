@@ -1,8 +1,13 @@
-from src.woori_crawler import WooriCrawler
-import pandas as pd
+from src.google_store_app_review_crawler import GoogleStoreAppReviewCrawler
+from pandas import DataFrame
 
-crawler = WooriCrawler()
+crawler = GoogleStoreAppReviewCrawler()
 
-data = crawler.crawl()
-data = pd.DataFrame(data=[], columns=['날짜','아이디','별점','리뷰','답변'])
-data.to_csv('woori_bank_app_review.csv', encoding='utf-8')
+data = crawler.crawl(
+    store_url="https://play.google.com/store/apps/details?id=com.wooribank.smart.npib&showAllReviews=true"
+)
+
+dataFrame = DataFrame(data)
+dataFrame.columns=['date', 'user-name', 'star-rating', 'review', 'comment']
+
+dataFrame.to_csv('hana_bank_app_review_data.csv', index=False)
